@@ -9,12 +9,16 @@ You can also include images in this folder and reference them in the markdown. E
 
 ## How it works
 
-This is a 4bit adder that takes 4bit inputs and output a 4bit sum and a 1bit carry out.
+This is a 4bit ALU that takes two 4bit inputs and outputs a 8bit result
 
 ## How to test
 
 The first input was mapped to input pins 0 - 3 and the second input was mapped to input pins 4 - 7.
-The output sum was mapped to output pins 0 - 3 and the output carry out was mapped to output pin 4.
+The output sum was mapped to output pins 0 - 7.
+The opcode was mapped to in-out pin 0 - 3.
+The overflow was mapped to in-out pin 7.
+The carry_out was mapped to in-out pin 6.
+
 
 ## External hardware
 
