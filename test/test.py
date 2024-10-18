@@ -19,7 +19,7 @@ async def test_tt_um_Richard28277(dut):
 
     # Helper function to display results
     def display_result(op_name):
-        print(f"{op_name}: result = {dut.uo_out.value}, uio_out = {dut.uio_out.value}")
+        print(f"{op_name}: ui_in = {dut.ui_in.value}, result = {dut.uo_out.value}, uio_out = {dut.uio_out.value}")
 
     op_lst = ["ADD", "SUB", "MUL", "DIV", "AND", "OR", "XOR", "NOT", "ENC"]
 
@@ -112,7 +112,7 @@ async def test_tt_um_Richard28277(dut):
                 elif c == 6:
                     assert dut.uo_out.value == a^b
                 elif c == 7:
-                    assert dut.uo_out.value == ~((a << 4) | b)
+                    assert dut.uo_out.value == (~a << 4) | b
                 else:
                     assert dut.uo_out.value == ((a << 4) | b) ^ (0xAB)
 
