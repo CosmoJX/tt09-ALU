@@ -21,6 +21,9 @@ async def test_tt_um_Richard28277(dut):
     def display_result(op_name):
         print(f"{op_name}: result = {dut.uo_out.value}, uio_out = {dut.uio_out.value}")
 
+    op_lst = ["ADD", "SUB", "MUL", "DIV", "AND", "OR", "XOR", "NOT", "ENC"]
+
+    """
     # Test ADD operation
     dut.ui_in.value = 0b0011_0101  # a = 3, b = 5
     dut.uio_in.value = 0b0000      # opcode = ADD
@@ -84,3 +87,32 @@ async def test_tt_um_Richard28277(dut):
     await Timer(50, units='ns')
     display_result("ENC")
     assert dut.uo_out.value == (0b0010_1100 ^ 0xAB)  # Expect encryption result with key 0xAB
+
+    """
+
+    for a in range(16):
+        for b in range(16):
+            for c in range(8):
+                dut.ui_in.value = (a << 4) | b
+                dut.uio_in.value = c
+                await Timer(50, units='ns')
+                display_result(op_lst[c])
+                if c == 0:
+                    assert dut.uo_out.value == (a+b)%16
+                elif c == 1:
+                    assert dut.uo_out.value == (a-b)%16
+                elif c == 2:
+                    assert dut.uo_out.value == (a*b)%16
+                elif c == 3:
+                    assert dut.uo_out.value == ((a/b)%16 << 4) | ((a%b)%16) if b != 0 else 0
+                elif c == 4:
+                    assert dut.uo_out.value == a&b
+                elif c == 5:
+                    assert dut.uo_out.value == a|b
+                elif c == 6:
+                    assert dut.uo_out.value == a^b
+                elif c == 7:
+                    assert dut.uo_out.value == ~a
+                else:
+                    assert dut.uo_out.value == ((a << 4) | b) ^ (0xAB)
+
