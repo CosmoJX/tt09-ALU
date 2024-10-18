@@ -112,7 +112,7 @@ async def test_tt_um_Richard28277(dut):
                 elif c == 6:
                     assert dut.uo_out.value == a^b
                 elif c == 7:
-                    assert dut.uo_out.value == ~a
+                    assert dut.uo_out.value == ~((a << 4) | b)
                 else:
                     assert dut.uo_out.value == ((a << 4) | b) ^ (0xAB)
 
