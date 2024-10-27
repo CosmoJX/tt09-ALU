@@ -104,7 +104,10 @@ async def test_tt_um_Richard28277(dut):
                 elif c == 2:
                     assert dut.uo_out.value == (a*b)%16
                 elif c == 3:
-                    assert dut.uo_out.value == (((a//b)%16 * 16) | ((a%b)%16) if b != 0 else 0)
+                    if b == 0:
+                        assert dut.uo_out.value == 0
+                    else:
+                        assert dut.uo_out.value == ((a%b)<<4)|(a//b)
                 elif c == 4:
                     assert dut.uo_out.value == a&b
                 elif c == 5:
@@ -114,5 +117,5 @@ async def test_tt_um_Richard28277(dut):
                 elif c == 7:
                     assert dut.uo_out.value == (~a)%16
                 else:
-                    assert dut.uo_out.value == ((a << 4) | b) ^ (0xAB)
+                    assert dut.uo_out.value == ((a<<4)|b)^(0xAB)
 
